@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.mobisist.springbootseed.autoconfigure.baidupush.BaiduPushAutoConfiguration,\
+com.mobisist.springbootseed.autoconfigure.wechatpush.WechatPushAutoConfiguration,\
+com.mobisist.springbootseed.autoconfigure.yunpian.YunPianAutoConfiguration
