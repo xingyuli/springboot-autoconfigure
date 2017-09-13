@@ -37,7 +37,7 @@ open class WechatPushAutoConfiguration(private val properties: WechatPushPropert
 
     @Bean
     open fun wechatPushSender(templateIdProvider: TemplateIdProvider, wxMpService: WxMpService): WechatPushSender {
-        return if (properties.enabled!!) {
+        return if (properties.enabled) {
             WechatPushSender().apply {
                 this.templateIdProvider = templateIdProvider
                 this.wxMpService = wxMpService

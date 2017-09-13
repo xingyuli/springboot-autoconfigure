@@ -1,25 +1,19 @@
 package com.mobisist.springbootseed.autoconfigure.wechatpush
 
-import com.mobisist.springbootseed.autoconfigure.DelegatedProperties
+import com.mobisist.springbootseed.autoconfigure.AbstractProperties
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties(prefix = "springbootseed.messaging.wechatpush")
-class WechatPushProperties : DelegatedProperties() {
+class WechatPushProperties : AbstractProperties() {
 
-    var appId: String? by config
-    var appSecret: String? by config
+    var appId: String? = null
+    @Transient var appSecret: String? = null
 
     // for receiving messages and events
-    var token: String? by config
-    var aesKey: String? by config
+    @Transient var token: String? = null
+    @Transient var aesKey: String? = null
 
     // map template key to template id
-    var templates: Map<String, String>? by config
-
-    init {
-        sensitiveKeys.add("appSecret")
-        sensitiveKeys.add("token")
-        sensitiveKeys.add("aesKey")
-    }
+    var templates: Map<String, String>? = null
 
 }

@@ -1,27 +1,47 @@
 package com.mobisist.springbootseed.autoconfigure.baidupush
 
 import com.mobisist.components.messaging.baidupush.IOSDeployStatus
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.InitializingBean
+import com.mobisist.springbootseed.autoconfigure.AbstractProperties
 import org.springframework.boot.context.properties.ConfigurationProperties
-import com.mobisist.springbootseed.autoconfigure.DelegatedProperties
-import com.sun.media.jfxmediaimpl.platform.ios.IOSPlatform
 
 @ConfigurationProperties(prefix = "springbootseed.messaging.baidupush")
-class BaiduPushProperties : DelegatedProperties() {
+class BaiduPushProperties : AbstractProperties() {
 
-    var iosApiKey: String? by config
-    var iosSecretKey: String? by config
-    var iosDeployStatus: Int? by config
+    // NOTE: null indicates outermost configuration is not defined
+    var name: String? = null
 
-    var androidApiKey: String? by config
-    var androidSecretKey: String? by config
+    // TODO low-priority support default msgExpires
 
-    init {
-        sensitiveKeys.add("iosSecretKey")
-        sensitiveKeys.add("androidSecretKey")
+    var iosApiKey: String? = null
+    @Transient var iosSecretKey: String? = null
+    var iosDeployStatus: IOSDeployStatus = IOSDeployStatus.DEVELOPMENT
 
-        iosDeployStatus = IOSDeployStatus.DEVELOPMENT.intValue
+    var androidApiKey: String? = null
+    @Transient var androidSecretKey: String? = null
+
+    // multi-configurations support
+    var configurations: List<BaiduPushProperties>? = null
+
+    override fun afterPropertiesSet() {
+        if (configurations == null || configurations!!.isEmpty()) {
+            // force the outermost configuration name to 'default'
+            name = DEFAULT_NAME
+
+        } else {
+            if (configurations!!.find { it.name.isNullOrBlank() } != null) {
+                throw RuntimeException("name must be explicitly specified when using multi-configurations")
+            }
+
+            // any non-blank property indicates using outermost configuration
+            if (arrayOf(iosApiKey, iosSecretKey, androidApiKey, androidSecretKey).find { !it.isNullOrBlank() } != null) {
+                throw RuntimeException("you are mixing outermost and multi configurations, please choose either one but not both")
+            }
+        }
+        super.afterPropertiesSet()
+    }
+
+    companion object {
+        private const val DEFAULT_NAME = "default"
     }
 
 }

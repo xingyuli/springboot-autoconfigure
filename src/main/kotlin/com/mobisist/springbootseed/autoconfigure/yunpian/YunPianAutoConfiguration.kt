@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration
 open class YunPianAutoConfiguration(private val properties: YunPianProperties) {
 
     @Bean
-    open fun yunPianSender(): YunPianSender = if (properties.enabled!!) {
+    open fun yunPianSender(): YunPianSender = if (properties.enabled) {
         YunPianSender().apply {
             config = YunPianConfig().apply {
                 apikey = properties.apiKey!!
