@@ -45,9 +45,11 @@ open class BaiduPushAutoConfiguration(private val properties: BaiduPushPropertie
                 is PushMsgToSingleDeviceRequest -> {
                     // TODO depends on com.mobisist.swordess.common
 //                    logger.info("bpush is disabled, introspecting msg...\n${req.jsonStringify(prettyPrint = true)}")
-                    logger.debug("introspecting msg...\nchannelId: ${req.channelId}, message: ${req.message}")
+                    logger.debug("""inspecting BaiduPushMessage ...
+                        |send message: ${req.message}
+                        |to channelId: ${req.channelId}""".trimMargin())
                 }
-                else -> logger.warn("msg cannot be introspected as it is not a PushMsgToSingleDeviceRequest")
+                else -> logger.warn("msg cannot be inspected as it is not a PushMsgToSingleDeviceRequest")
             }
         }
 

@@ -57,10 +57,16 @@ open class WechatPushAutoConfiguration(private val properties: WechatPushPropert
         private val logger = LoggerFactory.getLogger(DummyWechatPushSender::class.java)
 
         override fun send(msg: WechatPushMessage) {
-            logger.debug("""use Template(key=${msg.templateKey}, id=${templateIdProvider!!.get(msg.templateKey)}), to openId ${msg.openId}, with content {
-            |    templateKey: ${msg.templateKey},
-            |    templateData: ${msg.templateData}
-            |}""".trimMargin())
+            logger.debug("""inspecting WechatPushMessage ...
+                |send message: {
+                |  templateKey: ${msg.templateKey},
+                |  templateData: ${msg.templateData}
+                |}
+                |to openId: ${msg.openId}
+                |with template: {
+                |  key: ${msg.templateKey},
+                |  id: ${templateIdProvider!!.get(msg.templateKey)}
+                |}""".trimMargin())
         }
 
     }

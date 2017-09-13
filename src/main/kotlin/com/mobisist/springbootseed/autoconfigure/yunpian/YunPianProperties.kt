@@ -8,4 +8,8 @@ class YunPianProperties : DelegatedProperties() {
 
     var apiKey: String? by config
 
+    init {
+        sensitiveKeys.add("apiKey")
+    }
+
 }

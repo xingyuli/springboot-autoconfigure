@@ -34,7 +34,9 @@ open class YunPianAutoConfiguration(private val properties: YunPianProperties) {
         private val logger = LoggerFactory.getLogger(DummyYunPianSender::class.java)
 
         override fun send(msg: SmsMessage): YunPianResponse {
-            logger.debug("return success response directly for msg: to ${msg.mobile} with content ${msg.text}")
+            logger.debug("""inspecting SmsMessage and return success response directly ...
+                |send message: ${msg.text}
+                |to mobile: ${msg.mobile}""".trimMargin())
             return YunPianResponse(mapOf("code" to 0, "msg" to "success"))
         }
 

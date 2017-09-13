@@ -9,6 +9,8 @@ open class DelegatedProperties : InitializingBean {
 
     protected val config = mutableMapOf<String, Any?>().withDefault { null }
 
+    protected val sensitiveKeys = mutableListOf<String>()
+
     var enabled: Boolean? by config
 
     // default values
@@ -19,7 +21,11 @@ open class DelegatedProperties : InitializingBean {
     override fun afterPropertiesSet() {
         // TODO depends on com.mobisist.swordess.common
 //        logger.info("messaging configurations are: ${config.jsonStringify(prettyPrint = true)}")
-        logger.debug("${javaClass.simpleName} are:\n$config")
+
+        // do not expose sensitive information to logs
+        val insensitiveConfig = config.filter { !sensitiveKeys.contains(it.key) }
+        logger.debug("""inspecting properties ...
+            |$insensitiveConfig""".trimMargin())
     }
 
 }

@@ -16,4 +16,10 @@ class WechatPushProperties : DelegatedProperties() {
     // map template key to template id
     var templates: Map<String, String>? by config
 
+    init {
+        sensitiveKeys.add("appSecret")
+        sensitiveKeys.add("token")
+        sensitiveKeys.add("aesKey")
+    }
+
 }

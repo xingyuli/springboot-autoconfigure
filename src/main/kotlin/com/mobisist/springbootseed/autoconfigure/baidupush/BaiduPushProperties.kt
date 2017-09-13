@@ -18,6 +18,9 @@ class BaiduPushProperties : DelegatedProperties() {
     var androidSecretKey: String? by config
 
     init {
+        sensitiveKeys.add("iosSecretKey")
+        sensitiveKeys.add("androidSecretKey")
+
         iosDeployStatus = IOSDeployStatus.DEVELOPMENT.intValue
     }
 
