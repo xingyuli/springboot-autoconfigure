@@ -3,6 +3,7 @@ package com.mobisist.springbootseed.autoconfigure.wechatpush
 import com.mobisist.components.messaging.wechatpush.TemplateIdProvider
 import com.mobisist.components.messaging.wechatpush.WechatPushMessage
 import com.mobisist.components.messaging.wechatpush.WechatPushSender
+import com.mobisist.springbootseed.autoconfigure.jsonStringify
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage
 import me.chanjar.weixin.mp.api.WxMpService
 import me.chanjar.weixin.mp.api.WxMpServiceImpl
@@ -58,15 +59,7 @@ open class WechatPushAutoConfiguration(private val properties: WechatPushPropert
 
         override fun send(msg: WechatPushMessage) {
             logger.debug("""inspecting WechatPushMessage ...
-                |send message: {
-                |  templateKey: ${msg.templateKey},
-                |  templateData: ${msg.templateData}
-                |}
-                |to openId: ${msg.openId}
-                |with template: {
-                |  key: ${msg.templateKey},
-                |  id: ${templateIdProvider!!.get(msg.templateKey)}
-                |}""".trimMargin())
+                |${msg.jsonStringify(prettyPrint = true)}""".trimMargin())
         }
 
     }

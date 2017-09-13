@@ -4,6 +4,7 @@ import com.mobisist.components.messaging.sms.SmsMessage
 import com.mobisist.components.messaging.sms.yunpian.v1.YunPianConfig
 import com.mobisist.components.messaging.sms.yunpian.v1.YunPianResponse
 import com.mobisist.components.messaging.sms.yunpian.v1.YunPianSender
+import com.mobisist.springbootseed.autoconfigure.jsonStringify
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
@@ -35,8 +36,7 @@ open class YunPianAutoConfiguration(private val properties: YunPianProperties) {
 
         override fun send(msg: SmsMessage): YunPianResponse {
             logger.debug("""inspecting SmsMessage and return success response directly ...
-                |send message: ${msg.text}
-                |to mobile: ${msg.mobile}""".trimMargin())
+                |${msg.jsonStringify(prettyPrint = true)}""".trimMargin())
             return YunPianResponse(mapOf("code" to 0, "msg" to "success"))
         }
 

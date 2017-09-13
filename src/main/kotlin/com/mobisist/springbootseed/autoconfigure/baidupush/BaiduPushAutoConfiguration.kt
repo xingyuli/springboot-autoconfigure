@@ -4,6 +4,7 @@ import com.baidu.yun.push.model.PushMsgToSingleDeviceRequest
 import com.mobisist.components.messaging.baidupush.BaiduPushConfig
 import com.mobisist.components.messaging.baidupush.BaiduPushMessage
 import com.mobisist.components.messaging.baidupush.BaiduPushSender
+import com.mobisist.springbootseed.autoconfigure.jsonStringify
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
@@ -43,11 +44,8 @@ open class BaiduPushAutoConfiguration(private val properties: BaiduPushPropertie
             val req = msg.req
             when (req) {
                 is PushMsgToSingleDeviceRequest -> {
-                    // TODO depends on com.mobisist.swordess.common
-//                    logger.info("bpush is disabled, introspecting msg...\n${req.jsonStringify(prettyPrint = true)}")
                     logger.debug("""inspecting BaiduPushMessage ...
-                        |send message: ${req.message}
-                        |to channelId: ${req.channelId}""".trimMargin())
+                        |${req.jsonStringify(prettyPrint = true)}""".trimMargin())
                 }
                 else -> logger.warn("msg cannot be inspected as it is not a PushMsgToSingleDeviceRequest")
             }

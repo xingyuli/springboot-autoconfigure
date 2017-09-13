@@ -19,13 +19,10 @@ open class DelegatedProperties : InitializingBean {
     }
 
     override fun afterPropertiesSet() {
-        // TODO depends on com.mobisist.swordess.common
-//        logger.info("messaging configurations are: ${config.jsonStringify(prettyPrint = true)}")
-
         // do not expose sensitive information to logs
         val insensitiveConfig = config.filter { !sensitiveKeys.contains(it.key) }
         logger.debug("""inspecting properties ...
-            |$insensitiveConfig""".trimMargin())
+            |${insensitiveConfig.jsonStringify(prettyPrint = true)}""".trimMargin())
     }
 
 }
