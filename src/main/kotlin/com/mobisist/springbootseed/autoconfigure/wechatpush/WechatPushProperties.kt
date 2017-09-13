@@ -1,7 +1,7 @@
 package com.mobisist.springbootseed.autoconfigure.wechatpush
 
-import org.springframework.boot.context.properties.ConfigurationProperties
 import com.mobisist.springbootseed.autoconfigure.DelegatedProperties
+import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties(prefix = "springbootseed.messaging.wechatpush")
 class WechatPushProperties : DelegatedProperties() {

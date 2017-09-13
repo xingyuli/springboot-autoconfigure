@@ -3,15 +3,12 @@ package com.mobisist.springbootseed.autoconfigure.wechatpush
 import com.mobisist.components.messaging.wechatpush.TemplateIdProvider
 import com.mobisist.components.messaging.wechatpush.WechatPushMessage
 import com.mobisist.components.messaging.wechatpush.WechatPushSender
-import me.chanjar.weixin.mp.api.WxMpConfigStorage
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage
 import me.chanjar.weixin.mp.api.WxMpService
 import me.chanjar.weixin.mp.api.WxMpServiceImpl
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -38,14 +35,16 @@ open class WechatPushAutoConfiguration(private val properties: WechatPushPropert
     }
 
     @Bean
-    open fun wechatPushSender(): WechatPushSender = if (properties.enabled!!) {
-        WechatPushSender().apply {
-            templateIdProvider = templateIdProvider()
-            wxMpService = wxMpService()
-        }
-    } else {
-        DummyWechatPushSender().apply {
-            templateIdProvider = templateIdProvider()
+    open fun wechatPushSender(templateIdProvider: TemplateIdProvider, wxMpService: WxMpService): WechatPushSender {
+        return if (properties.enabled!!) {
+            WechatPushSender().apply {
+                this.templateIdProvider = templateIdProvider
+                this.wxMpService = wxMpService
+            }
+        } else {
+            DummyWechatPushSender().apply {
+                this.templateIdProvider = templateIdProvider
+            }
         }
     }
 
@@ -54,12 +53,16 @@ open class WechatPushAutoConfiguration(private val properties: WechatPushPropert
     }
 
     private class DummyWechatPushSender : WechatPushSender() {
+
+        private val logger = LoggerFactory.getLogger(DummyWechatPushSender::class.java)
+
         override fun send(msg: WechatPushMessage) {
-            logger.debug("""send via dummy, use Template(key=${msg.templateKey},id=${templateIdProvider!!.get(msg.templateKey)}), send to ${msg.openId}, with {
+            logger.debug("""use Template(key=${msg.templateKey}, id=${templateIdProvider!!.get(msg.templateKey)}), to openId ${msg.openId}, with content {
             |    templateKey: ${msg.templateKey},
             |    templateData: ${msg.templateData}
             |}""".trimMargin())
         }
+
     }
 
 }

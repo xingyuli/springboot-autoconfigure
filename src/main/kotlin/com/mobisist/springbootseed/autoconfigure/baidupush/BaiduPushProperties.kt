@@ -1,9 +1,11 @@
 package com.mobisist.springbootseed.autoconfigure.baidupush
 
+import com.mobisist.components.messaging.baidupush.IOSDeployStatus
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.boot.context.properties.ConfigurationProperties
 import com.mobisist.springbootseed.autoconfigure.DelegatedProperties
+import com.sun.media.jfxmediaimpl.platform.ios.IOSPlatform
 
 @ConfigurationProperties(prefix = "springbootseed.messaging.baidupush")
 class BaiduPushProperties : DelegatedProperties() {
@@ -16,8 +18,7 @@ class BaiduPushProperties : DelegatedProperties() {
     var androidSecretKey: String? by config
 
     init {
-        // TODO low-priority - add enum: IosDeployStatus { DEVELOPMENT, PRODUCT }
-        iosDeployStatus = 1 // 1:开发状态 2:生产状态
+        iosDeployStatus = IOSDeployStatus.DEVELOPMENT.intValue
     }
 
 }

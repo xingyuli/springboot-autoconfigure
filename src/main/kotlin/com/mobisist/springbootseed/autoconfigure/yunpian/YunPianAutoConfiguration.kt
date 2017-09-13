@@ -4,6 +4,7 @@ import com.mobisist.components.messaging.sms.SmsMessage
 import com.mobisist.components.messaging.sms.yunpian.v1.YunPianConfig
 import com.mobisist.components.messaging.sms.yunpian.v1.YunPianResponse
 import com.mobisist.components.messaging.sms.yunpian.v1.YunPianSender
+import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -30,8 +31,10 @@ open class YunPianAutoConfiguration(private val properties: YunPianProperties) {
 
     private class DummyYunPianSender : YunPianSender() {
 
+        private val logger = LoggerFactory.getLogger(DummyYunPianSender::class.java)
+
         override fun send(msg: SmsMessage): YunPianResponse {
-            logger.debug("send via dummy, return dummy success response for msg: to ${msg.mobile} with content ${msg.text}")
+            logger.debug("return success response directly for msg: to ${msg.mobile} with content ${msg.text}")
             return YunPianResponse(mapOf("code" to 0, "msg" to "success"))
         }
 
