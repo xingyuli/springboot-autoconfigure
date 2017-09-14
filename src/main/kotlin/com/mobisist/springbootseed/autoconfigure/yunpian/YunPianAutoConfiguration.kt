@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 // TODO low-priority - add property for specifying yunpian version?
+// TODO define yunpian java api and check that class
 @Configuration
 @ConditionalOnClass(YunPianSender::class)
 @ConditionalOnMissingBean(YunPianSender::class)

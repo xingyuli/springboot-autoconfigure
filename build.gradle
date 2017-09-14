@@ -1,8 +1,9 @@
 group 'com.mobisist.springbootseed'
-version '0.1.0'
+version '0.1.1'
 
 buildscript {
     ext.kotlin_version = '1.1.4'
+    ext.spring_boot_version = '1.5.6.RELEASE'
 
     repositories {
         maven {
@@ -29,7 +30,10 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-    compile "org.springframework.boot:spring-boot-autoconfigure:1.5.6.RELEASE"
+    compile "org.springframework.boot:spring-boot-autoconfigure:$spring_boot_version"
+
+    kapt "org.springframework.boot:spring-boot-configuration-processor:$spring_boot_version"
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor:$spring_boot_version"
 
     compileOnly 'com.mobisist.components:messaging:0.2.0'
 
@@ -46,6 +50,7 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+compileJava.dependsOn(processResources)
 
 /* ***** common for local deploy and remote deploy ***** */
 

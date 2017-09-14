@@ -1,5 +1,6 @@
 package com.mobisist.springbootseed.autoconfigure.baidupush
 
+import com.baidu.yun.push.client.BaiduPushClient
 import com.baidu.yun.push.model.PushMsgToSingleDeviceRequest
 import com.mobisist.components.messaging.baidupush.BaiduPushConfig
 import com.mobisist.components.messaging.baidupush.BaiduPushMessage
@@ -16,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 // TODO low-priority - separate bpush, yunpian and wechat push, so that the class sepcified by ConditionalOnClass and ConditionalOnMissingBean could match
 @Configuration
-@ConditionalOnClass(BaiduPushSender::class)
+@ConditionalOnClass(BaiduPushClient::class, BaiduPushSender::class)
 @ConditionalOnMissingBean(BaiduPushSender::class)
 @EnableConfigurationProperties(BaiduPushProperties::class)
 open class BaiduPushAutoConfiguration(private val properties: BaiduPushProperties) {

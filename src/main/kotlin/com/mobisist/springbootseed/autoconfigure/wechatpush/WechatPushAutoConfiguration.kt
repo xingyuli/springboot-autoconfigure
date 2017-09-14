@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@ConditionalOnClass(WechatPushSender::class)
+@ConditionalOnClass(WxMpService::class, WechatPushSender::class)
 @ConditionalOnMissingBean(WechatPushSender::class)
 @EnableConfigurationProperties(WechatPushProperties::class)
 open class WechatPushAutoConfiguration(private val properties: WechatPushProperties) {

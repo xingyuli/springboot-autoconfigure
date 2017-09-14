@@ -1,0 +1,20 @@
+{
+  "properties": [
+    {
+      "name": "springbootseed.messaging.baidupush.enabled",
+      "defaultValue": false
+    },
+    {
+      "name": "springbootseed.messaging.baidupush.ios-deploy-status",
+      "defaultValue": "development"
+    },
+    {
+      "name": "springbootseed.messaging.wechatpush.enabled",
+      "defaultValue": false
+    },
+    {
+      "name": "springbootseed.messaging.yunpian.enabled",
+      "defaultValue": false
+    }
+  ]
+}
